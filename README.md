@@ -2,9 +2,6 @@
 
 A simple Discord.js bot that provides a URL purification feature to remove suspicious parameters typically used to track users. 
 
-1. <a href='#installation'>Installation</a>
-1. <a href='#usage'>Usage</a>
-
 ## Installation
 
 1. Go to the Discord Developer Dashboard.
@@ -18,7 +15,7 @@ A simple Discord.js bot that provides a URL purification feature to remove suspi
 - Message Content Intent
 ```
 
-4. **Scroll down to the Permissions section and select the permissions required by the bot.** You can omit this step and use the following permissions integer: 1692133430525120; otherwise, select the necessary permissions to ensure proper functionality.
+4. **Scroll down to the Permissions section and select the permissions required by the bot.** You can omit this step and use the following permissions integer: `1692133430525120`; otherwise, select the necessary permissions to ensure proper functionality and copy generated number.
 ```
 - View Audit Log
 - Change Nickname
@@ -38,8 +35,9 @@ A simple Discord.js bot that provides a URL purification feature to remove suspi
 
 5. **Modify the link below by inserting your APPLICATION ID and permissions integer.**
 Open the modified link in a web browser or send it within the Discord client and click on it.
-````
+
+```
 https://discord.com/oauth2/authorize?client_id=[your_application_id]&permissions=[permissions]
 ```
 
-
+6. Invite bot to your Discord server.

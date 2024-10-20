@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import { Client, IntentsBitField } from 'discord.js';
-import ready from './listeners/ready';
+import registerCommands from './src/listeners/registerCommands';
+import messageReader from "./src/listeners/messageReader";
 
 // Read environment variables
 dotenv.config();
@@ -16,7 +17,8 @@ const client = new Client({
 });
 
 // Listeners
-ready(client);
+registerCommands(client);
+messageReader(client);
 
 client.login(process.env.TOKEN)
     .then(() => {

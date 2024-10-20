@@ -2,7 +2,7 @@
     "compilerOptions": {
         "target": "ESNext",
         "module": "commonjs",
-        "rootDir": "./app/src/",
+        "rootDir": "./app/",
         "outDir": "./dist/",
         "strict": true,
         "moduleResolution": "node",
@@ -21,7 +21,7 @@
         "baseUrl": "./"
     },
     "files": [
-        "app/src/index.ts"
+      "app/index.ts"
     ],
     "include": [
         "./**/*.ts"

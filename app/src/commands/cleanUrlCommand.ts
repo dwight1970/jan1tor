@@ -1,9 +1,9 @@
 import { CommandInteraction, Client, ApplicationCommandType } from "discord.js";
 import { ChatCommand } from "./types";
 
-export const Hello: ChatCommand = {
-    name: "hello",
-    description: "Returns a greeting",
+export const CleanUrlCommand: ChatCommand = {
+    name: "clean-url",
+    description: "Returns url ",
     type: ApplicationCommandType.ChatInput,
     run: async (client: Client, interaction: CommandInteraction) => {
         const content = "Hello there!";
@@ -15,4 +15,4 @@ export const Hello: ChatCommand = {
     }
 };
 
-export default Hello;
+export default CleanUrlCommand;

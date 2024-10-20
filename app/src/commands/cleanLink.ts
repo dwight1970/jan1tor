@@ -1,7 +1,5 @@
 import { ApplicationCommandType, Client, MessageContextMenuCommandInteraction } from "discord.js";
 import { MessageContextCommand } from "./types";
-import { TidyURL } from "tidy-url";
-
 
 const cleanLink: MessageContextCommand = {
     name: "Clean URL",
@@ -11,23 +9,19 @@ const cleanLink: MessageContextCommand = {
 export const cleanLinkInteraction = async (client: Client, interaction: MessageContextMenuCommandInteraction) => {
     if (!interaction.isMessageContextMenuCommand()) return;
     const { content } = interaction.targetMessage;
-    const urls = content.match(/https?:\/\/[^\s/$.?#].[^\s]*/g);
+    const { user } = interaction;
+    // const urls = content.match(/https?:\/\/[^\s/$.?#].[^\s]*/g);
 
-    if (!urls?.length) {
-        return await interaction.reply({
-            ephemeral: true,
-            content: 'No links were found.'
-        });
-    }
-
-    const reply = [];
-    reply.push( ...urls.map((url):string => {
-        return ` - ${TidyURL.clean(url).url}\n`;
-    }));
+    // if (!urls?.length) {
+    //     return await interaction.reply({
+    //         ephemeral: true,
+    //         content: 'No links were found.'
+    //     });
+    // }
 
     return await interaction.reply({
         ephemeral: true,
-        content: reply.join(''),
+        content: `URLs cleaned from ${user.username}'s message:\n @TODO`,
     });
 
 };

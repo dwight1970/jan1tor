@@ -1,0 +1,29 @@
+{
+  "name": "bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app/src/index.ts",
+  "scripts": {
+    "start": "ts-node app/src/index",
+    "start:debug": "ts-node-dev app/src/index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "20.16.10",
+    "node": "20.18.0",
+    "ts-node": "10.9.2",
+    "ts-node-dev": "2.0.0",
+    "typescript": "5.6.2"
+  },
+  "dependencies": {
+    "discord.js": "14.16.3",
+    "dotenv": "16.0.3",
+    "tidy-url": "1.18.3"
+  },
+  "volta": {
+    "node": "20.16.0",
+    "npm": "10.0.0"
+  }
+}

@@ -41,3 +41,11 @@ https://discord.com/oauth2/authorize?client_id=[your_application_id]&permissions
 ```
 
 6. Invite bot to your Discord server.
+
+
+## Shout-outs
+
+- tidy-url - https://github.com/DrKain/tidy-url
+- Parameters for cleaning urls https://github.com/mpchadwick/tracking-query-params-registry
+
+

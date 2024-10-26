@@ -1,6 +1,6 @@
 import clean from "./clean";
 
-const urlCleaner = (data: string): string | undefined => {
+const urlCleaner = (data: string): string[] | undefined => {
   const urls = data.match(/https?:\/\/[^\s/$.?#].[^\s]*/g);
   const result: string[] = [];
 
@@ -8,18 +8,14 @@ const urlCleaner = (data: string): string | undefined => {
 
   (urls || []).forEach((url: string) => {
     const cleaned = clean(url);
-    if (cleaned) {
+    if (url !== cleaned) { // push only if change was made
       result.push(cleaned);
     }
   });
 
   if (!result.length) return;
 
-  return `
-    Tracking params found in URL(s):\n
-    ${result.map((item) => { return `- ${item}\n` }).join('')}
-    `;
-
+  return result;
 };
 
 export default urlCleaner;

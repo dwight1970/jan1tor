@@ -1,9 +1,11 @@
-import CleanUrlCommand from "./cleanUrlCommand";
-import CleanLink from "./cleanLink";
-import { ChatCommand, MessageContextCommand } from "./types";
+import CleanUrlCommand from "./cleanUrlChatCommand";
+import CleanLink from "./cleanUrlContextCommand";
+import { ApplicationCommandDataResolvable } from "discord.js";
 
-export const Commands: (ChatCommand | MessageContextCommand)[] = [
+const commands: ApplicationCommandDataResolvable[] = [
   CleanUrlCommand,
   CleanLink,
 ];
+
+export default commands;
 

@@ -1,6 +1,7 @@
 import { Client, Events } from "discord.js";
-import { Commands } from "../commands";
-import { cleanLinkInteraction } from "../commands/cleanLink";
+import commands from "../commands";
+import CleanUrlContextCommand, { cleanUrlContextInteraction } from "../commands/cleanUrlContextCommand";
+import CleanUrlChatCommand, { cleanUrlChatInteraction } from "../commands/cleanUrlChatCommand";
 
 export const registerCommands = (client: Client): void => {
   client.on("ready", async () => {
@@ -9,15 +10,31 @@ export const registerCommands = (client: Client): void => {
       return;
     }
 
-    // inject commands
-    await client.application.commands.set(Commands);
+    // inject commands definitions
+    await client.application.commands.set(commands);
     console.log(`${client.user.username} is online`);
   });
 
+  // attach interactions to the commands
   client.on(Events.InteractionCreate, async interaction => {
-    if (interaction.isMessageContextMenuCommand()) {
-      return await cleanLinkInteraction(client, interaction);
+
+    // commands
+    if (interaction.isCommand()) {
+      const { commandName } = interaction;
+
+      switch (commandName) {
+        case CleanUrlContextCommand.name:
+          if (interaction.isMessageContextMenuCommand()) {
+            return await cleanUrlContextInteraction(client, interaction);
+          }
+          return;
+        case CleanUrlChatCommand.name:
+          if (interaction.isChatInputCommand()) {
+            return await cleanUrlChatInteraction(client, interaction);
+          }
+      }
     }
+    return;
   });
 };
 

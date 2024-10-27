@@ -1,14 +1,33 @@
-import { Client, Events } from "discord.js";
+import { Client, Events, REST } from "discord.js";
+import { Routes } from 'discord-api-types/v9';
 import commands from "../commands";
 import CleanUrlContextCommand, { cleanUrlContextInteraction } from "../commands/cleanUrlContextCommand";
 import CleanUrlChatCommand, { cleanUrlChatInteraction } from "../commands/cleanUrlChatCommand";
 
-export const registerCommands = (client: Client): void => {
+export const registerCommands = async (client: Client): Promise<void> => {
   client.on("ready", async () => {
     if (!client.user || !client.application) {
       console.error('Unable to start Discord client');
       return;
     }
+
+    if (client.token === null || !process.env.APPLICATION_ID) {
+      console.error('Unable to register commands. No token or application ID provided');
+      return;
+    }
+
+    const rest = new REST({version: '10'}).setToken(client.token);
+
+    // refresh commands on discord api side
+    console.log('Registering commands in Discord API');
+    rest.put(Routes.applicationCommands(process.env.APPLICATION_ID),
+      {body: commands.map((command) => command.toJSON())})
+      .then(() => {
+        console.log('Commands registered');
+      })
+      .catch((error) => {
+        console.log('Error while registering commands', error);
+      });
 
     // inject commands definitions
     await client.application.commands.set(commands);
@@ -20,7 +39,7 @@ export const registerCommands = (client: Client): void => {
 
     // commands
     if (interaction.isCommand()) {
-      const { commandName } = interaction;
+      const {commandName} = interaction;
 
       switch (commandName) {
         case CleanUrlContextCommand.name:

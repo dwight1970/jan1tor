@@ -6,8 +6,8 @@ const urlCleaner = (data: string): string[] | undefined => {
 
   if (urls && urls?.length === 0) return;
 
-  (urls || []).forEach((url: string) => {
-    const cleaned = clean(url);
+  (urls || []).forEach(async (url: string) => {
+    const cleaned = await clean(url); // @todo fix execution chain here
     if (url !== cleaned) { // push only if change was made
       result.push(cleaned);
     }

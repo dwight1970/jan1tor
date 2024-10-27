@@ -1,12 +1,15 @@
 import {
   Client,
   ContextMenuCommandBuilder,
-  MessageContextMenuCommandInteraction
+  MessageContextMenuCommandInteraction,
+  ApplicationCommandType,
 } from "discord.js";
 import urlCleaner from "../lib/urlCleaner";
 
 const CleanUrlContextCommand = new ContextMenuCommandBuilder()
-  .setName("clean-url-context");
+  .setName("clean-url-context")
+  // @ts-expect-error incorrect type definition on discord.js side
+  .setType(ApplicationCommandType.Message)
 
 export const cleanUrlContextInteraction = async (_client: Client, interaction: MessageContextMenuCommandInteraction) => {
   if (!interaction.isMessageContextMenuCommand()) return;

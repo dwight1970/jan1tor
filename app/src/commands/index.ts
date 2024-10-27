@@ -1,8 +1,8 @@
 import CleanUrlCommand from "./cleanUrlChatCommand";
 import CleanLink from "./cleanUrlContextCommand";
-import { ApplicationCommandDataResolvable } from "discord.js";
+import { CommandDefinition } from "../types/common";
 
-const commands: ApplicationCommandDataResolvable[] = [
+const commands: CommandDefinition[] = [
   CleanUrlCommand,
   CleanLink,
 ];

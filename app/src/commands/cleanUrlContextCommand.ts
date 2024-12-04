@@ -5,32 +5,39 @@ import {
   ApplicationCommandType,
 } from "discord.js";
 import urlCleaner from "../lib/urlCleaner";
+import formatResponse from "../lib/urlCleaner/formatResponse";
 
 const CleanUrlContextCommand = new ContextMenuCommandBuilder()
-  .setName("clean-url-context")
+  .setName("Clean URLs inside message")
   // @ts-expect-error incorrect type definition on discord.js side
   .setType(ApplicationCommandType.Message)
 
 export const cleanUrlContextInteraction = async (_client: Client, interaction: MessageContextMenuCommandInteraction) => {
   if (!interaction.isMessageContextMenuCommand()) return;
-  const {content} = interaction.targetMessage;
-  const cleanedUrls = urlCleaner(content);
+  const {content, author} = interaction.targetMessage;
 
-  if (!cleanedUrls) {
+  // ignore requests to clean own urls
+  if (author.username === _client?.user?.username) {
     return await interaction.reply({
       ephemeral: true,
-      content: 'Unable to clean any links inside that message, sorry :(',
+      content: 'Nope ;)',
     });
   }
 
-  const response = `URL(s) cleaned of tracking params:\n
-          ${cleanedUrls.map((item) => `- ${item}`).join('\n')}
-          `;
+  urlCleaner(content)
+    .then(async (cleanedUrls) => {
+      if (!cleanedUrls) {
+        return await interaction.reply({
+          ephemeral: true,
+          content: 'Unable to clean any links inside that message, sorry :(',
+        });
+      }
 
-  return await interaction.reply({
-    ephemeral: true,
-    content: response
-  });
+      return await interaction.reply({
+        ephemeral: true,
+        content: formatResponse(cleanedUrls)
+      });
+    });
 };
 
 export default CleanUrlContextCommand;

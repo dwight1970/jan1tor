@@ -3,6 +3,7 @@ import { Routes } from 'discord-api-types/v9';
 import commands from "../commands";
 import CleanUrlContextCommand, { cleanUrlContextInteraction } from "../commands/cleanUrlContextCommand";
 import CleanUrlChatCommand, { cleanUrlChatInteraction } from "../commands/cleanUrlChatCommand";
+//import DiggaChatCommand, { diggaChatInteraction } from "../commands/diggaChatCommand";
 
 export const registerCommands = async (client: Client): Promise<void> => {
   client.on("ready", async () => {
@@ -51,6 +52,14 @@ export const registerCommands = async (client: Client): Promise<void> => {
           if (interaction.isChatInputCommand()) {
             return await cleanUrlChatInteraction(client, interaction);
           }
+          return;
+        // case DiggaChatCommand.name:
+        //   if (interaction.isChatInputCommand()) {
+        //     return await diggaChatInteraction(client, interaction);
+        //   }
+        //   return;
+        default:
+          return;
       }
     }
     return;

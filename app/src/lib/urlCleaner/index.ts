@@ -1,21 +1,29 @@
 import clean from "./clean";
+import { TidyURL } from "tidy-url";
+import ensureTrailingSlash from "../helpers/ensureTrailingSlash";
 
-const urlCleaner = (data: string): string[] | undefined => {
+const urlCleaner = async (data: string): Promise<string[] | undefined> => {
   const urls = data.match(/https?:\/\/[^\s/$.?#].[^\s]*/g);
-  const result: string[] = [];
+  const promises: Promise<string>[] = [];
 
-  if (urls && urls?.length === 0) return;
+  if (urls === null || urls?.length === 0) return;
 
-  (urls || []).forEach(async (url: string) => {
-    const cleaned = await clean(url); // @todo fix execution chain here
-    if (url !== cleaned) { // push only if change was made
-      result.push(cleaned);
-    }
+
+  (urls || []).forEach((url: string) => {
+    promises.push(clean(url));
   });
 
-  if (!result.length) return;
+  const resolved = new Set([...await Promise.all(promises)]);
 
-  return result;
+  if (resolved.size === 0) return;
+
+  //const compare = urls.map(ensureTrailingSlash);
+
+  // remove any urls that are identical
+  // compare.forEach((url: string) => resolved.delete(url));
+  urls.forEach((url: string) => resolved.delete(url));
+
+  return Array.from(resolved);
 };
 
 export default urlCleaner;

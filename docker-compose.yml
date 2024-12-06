@@ -1,0 +1,23 @@
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: docker/dev/Dockerfile
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    command: npm run start:debug
+
+  prod:
+    build:
+      context: .
+      dockerfile: docker/prod/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+    command: npm start

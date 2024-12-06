@@ -22,7 +22,7 @@ messageReaderListener(client);
 
 client.login(process.env.TOKEN)
   .then(() => {
-    console.info('Bot has logged in');
+    console.info('Bot has logged in!');
   })
   .catch((error) => {
     console.error(error);

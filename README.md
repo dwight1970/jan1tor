@@ -19,7 +19,6 @@ A simple Discord.js bot that provides a URL purification feature to remove suspi
 4. **Scroll down to the Permissions section and select the permissions required by the bot.** Alternatively, you can skip this step and use the following permissions integer: `1692133430525120`. If you choose to select the permissions manually, ensure proper functionality by copying the generated number after configuration.
 ```
 - View Audit Log
-- Change Nickname
 - View Channels
 - View Server Insights
 - View Server Subscription Insights

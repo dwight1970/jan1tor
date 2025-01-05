@@ -1,5 +1,8 @@
 services:
   dev:
+    restart: no
+    networks:
+      - jan1tor
     build:
       context: .
       dockerfile: docker/dev/Dockerfile
@@ -13,6 +16,9 @@ services:
     command: npm run start:debug
 
   prod:
+    restart: on-failure:3
+    networks:
+      - jan1tor
     build:
       context: .
       dockerfile: docker/prod/Dockerfile
@@ -21,3 +27,9 @@ services:
     environment:
       NODE_ENV: production
     command: npm start
+
+networks:
+  jan1tor:
+    driver: bridge
+
+

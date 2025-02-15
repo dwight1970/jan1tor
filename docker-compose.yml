@@ -26,8 +26,8 @@ services:
       - ./app/data:/app/dist/data
     ports:
       - "3000:3000"
-    environment:
-      NODE_ENV: production
+    env_file:
+      - .env
     command: npm start
 
 networks:

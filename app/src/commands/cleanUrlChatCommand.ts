@@ -21,15 +21,15 @@ export const cleanUrlChatInteraction = async (_client: Client, interaction: Chat
 
   urlCleaner(content)
     .then(async (cleanedUrls) => {
-      if (!cleanedUrls) {
+      if (!cleanedUrls?.length) {
         return await interaction.reply({
-          ephemeral: true,
+          flags: ['Ephemeral'],
           content: 'Unable to clean any links inside that message, sorry :(',
         });
       }
 
       return await interaction.reply({
-        ephemeral: true,
+        flags: ['Ephemeral', 'SuppressEmbeds'],
         content: formatResponse(cleanedUrls)
       });
     });

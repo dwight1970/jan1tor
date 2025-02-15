@@ -1,8 +1,8 @@
 import { MessageStrategy } from "../types";
-import { Message } from "discord.js";
+import type { Message } from "discord.js";
 
 class SampleStrategy implements MessageStrategy {
-  match(message: Message): boolean {
+  async match(message: Message): Promise<boolean> {
     const lowerCaseTarget = message.content.toLowerCase();
     const words = ['text1', 'text2', 'text3'];
 
@@ -13,8 +13,8 @@ class SampleStrategy implements MessageStrategy {
     return matchCount >= 2;
   }
 
-  execute(message: Message) {
-    message.react('😼');
+  async execute(message: Message): Promise<void> {
+    await message.react('😼');
   }
 }
 

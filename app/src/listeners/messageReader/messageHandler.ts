@@ -8,11 +8,10 @@ class MessageHandler {
     this.strategies.push(strategy);
   }
 
-  handle(message: Message) {
+  async handle(message: Message) {
     for (const strategy of this.strategies) {
-      if (strategy.match(message)) {
-        strategy.execute(message);
-        return;
+      if (await strategy.match(message)) {
+        return await strategy.execute(message);
       }
     }
   }

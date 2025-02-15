@@ -2,14 +2,13 @@ import {
   Client,
   ContextMenuCommandBuilder,
   MessageContextMenuCommandInteraction,
-  ApplicationCommandType,
+  ApplicationCommandType, MessageFlagsBitField,
 } from "discord.js";
 import urlCleaner from "../lib/urlCleaner";
 import formatResponse from "../lib/urlCleaner/formatResponse";
 
 const CleanUrlContextCommand = new ContextMenuCommandBuilder()
   .setName("Clean URLs inside message")
-  // @ts-expect-error incorrect type definition on discord.js side
   .setType(ApplicationCommandType.Message)
 
 export const cleanUrlContextInteraction = async (_client: Client, interaction: MessageContextMenuCommandInteraction) => {
@@ -18,23 +17,20 @@ export const cleanUrlContextInteraction = async (_client: Client, interaction: M
 
   // ignore requests to clean own urls
   if (author.username === _client?.user?.username) {
-    return await interaction.reply({
-      ephemeral: true,
-      content: 'Nope ;)',
-    });
+    return;
   }
 
   urlCleaner(content)
     .then(async (cleanedUrls) => {
-      if (!cleanedUrls) {
+      if (!cleanedUrls?.length) {
         return await interaction.reply({
-          ephemeral: true,
+          flags: ['Ephemeral'],
           content: 'Unable to clean any links inside that message, sorry :(',
         });
       }
 
       return await interaction.reply({
-        ephemeral: true,
+        flags: ['Ephemeral', 'SuppressEmbeds'],
         content: formatResponse(cleanedUrls)
       });
     });

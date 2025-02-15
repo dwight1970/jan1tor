@@ -1,5 +1,6 @@
 app/data/
 .idea
 .env
+.env.prod
 node_modules
 dist
